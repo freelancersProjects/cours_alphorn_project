@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1 class="global-title">Nos Cours</h1>
+
+<div class="course-container">
+	{% set courses = [
+{ image: 'images/image_banner.png', category: 'DATA - COURS', title: 'Objectif IA : initiez-vous à l\'intelligence artificielle', difficulty: 'Facile', time: '6 heures', description: 'Vous découvrirez ce que recouvre vraiment l\'intelligence artificielle ! Ses enjeux, ses possibilités, son fonctionnement scientifique...' },
+{ image: 'images/image_banner.png', category: 'DÉVELOPPEMENT - COURS', title: 'Créez votre site web avec HTML5 et CSS3', difficulty: 'Facile', time: '15 heures', description: 'Vous rêvez d\'apprendre à créer des sites web ? Débutez avec ce cours qui vous enseignera tout ce qu\'il faut savoir sur le développement de sites...' },
+{ image: 'images/image_banner.png', category: 'BUREAUTIQUE - COURS', title: 'Maîtrisez les fondamentaux d’Excel', difficulty: 'Facile', time: '6 heures', description: 'La maîtrise des fonctionnalités d\'Excel est souvent indispensable. Prenez en main le logiciel puis allez plus loin avec les formules et tableaux dynamiques...' },
+{ image: 'images/image_banner.png', category: 'DATA - COURS', title: 'Utilisez ChatGPT pour améliorer votre productivité', difficulty: 'Facile', time: '2 heures', description: 'Apprenez à utiliser ChatGPT pour augmenter votre productivité : grâce au prompt engineering, découvrez sur quelles tâches vous pouvez gagner du temps...' }
+        ] %}
+
+        {% for course in courses %}
+            <div class="course-card">
+                <img src="{{ asset(course.image) }}" alt="Image du cours">
+                <div class="course-content">
+                    <span class="category">{{ course.category }}</span>
+                    <h2>{{ course.title }}</h2>
+                    <div class="meta">
+                        <span><i class="fas fa-signal"></i> {{ course.difficulty }}</span>
+                        <span><i class="far fa-clock"></i> {{ course.time }}</span>
+                    </div>
+                    <p>{{ course.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
