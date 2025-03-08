@@ -1,5 +1,6 @@
 :root {
   --forest-green: #2f4f4f;
+  --forest-green-hover: #223838;
   --saddle-brown: #8b5a2b;
   --sky-blue: #5dade2;
   --dark-green: #253d3d;
@@ -257,4 +258,13 @@ body {
   background-color: var(--saddle-brown);
   transform: scale(1.1);
   transition: all 0.3s ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: #333;
+}
+
+figcaption{
+    display: none;
 }

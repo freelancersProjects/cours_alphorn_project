@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="course-view-container">
+		<p class="number-page-progress">{{ currentPage }} / {{ maxPageNumber }}</p>
+		<div class="progress-bar-container">
+			<div class="progress-bar" style="width: {{ (currentPage / maxPageNumber) * 100 }}%;"></div>
+		</div>
+		<hr class="separator">
+
+		{% if currentPage == 1 %}
+
+			<h1 class="course-title">{{ course.title }}</h1>
+
+			<hr class="separator">
+		{% endif %}
+
+		<div class="course-content">
+			{% for block in blocks %}
+				<div class="text-block">
+					{{ block.content|raw }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<hr class="separator">
+
+		<div class="course-navigation">
+			{% if currentPage > 1 %}
+				<a href="{{ path('app_cours_view', { id: course.id, page: currentPage - 1 }) }}" class="nav-btn">
+					<img src="{{ asset('images/icons/arrow-course-left.svg') }}" alt="Précédent">
+					Page Précédente
+				</a>
+			{% else %}
+				<a href="{{ path('app_cours') }}" class="nav-btn">
+					<img src="{{ asset('images/icons/arrow-course-left.svg') }}" alt="Retour au menu">
+					Retour au menu
+				</a>
+			{% endif %}
+
+			{% if currentPage < maxPageNumber %}
+				<a href="{{ path('app_cours_view', { id: course.id, page: currentPage + 1 }) }}" class="nav-btn">
+					Page Suivante
+					<img src="{{ asset('images/icons/arrow-course-right.svg') }}" alt="Suivant">
+				</a>
+			{% else %}
+				<a href="{{ path('app_cours') }}" class="nav-btn">
+					Terminer le cours
+				</a>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

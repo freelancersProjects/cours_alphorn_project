@@ -2,13 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Course;
 use App\Entity\CourseBlock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<CourseBlock>
- */
 class CourseBlockRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,28 +14,31 @@ class CourseBlockRepository extends ServiceEntityRepository
         parent::__construct($registry, CourseBlock::class);
     }
 
-    //    /**
-    //     * @return CourseBlock[] Returns an array of CourseBlock objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Récupère le nombre maximal de pages pour un cours donné.
+     */
+    public function getMaxPageNumber(Course $course): int
+    {
+        return (int) $this->createQueryBuilder('cb')
+            ->select('MAX(cb.page_number) as max_page')
+            ->where('cb.course = :course')
+            ->setParameter('course', $course)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
-    //    public function findOneBySomeField($value): ?CourseBlock
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Récupère tous les blocs de contenu pour une page donnée et un cours donné.
+     */
+    public function getBlocksByPage(Course $course, int $page): array
+    {
+        return $this->createQueryBuilder('cb')
+            ->where('cb.course = :course')
+            ->andWhere('cb.page_number = :page')
+            ->setParameter('course', $course)
+            ->setParameter('page', $page)
+            ->orderBy('cb.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
